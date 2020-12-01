@@ -753,6 +753,182 @@ a=sendrecv
 a=rtcp:PORT
 SDP
 
+##
+
+offer('strip-all w consume and offer',
+	{ codec => {
+		strip => ['all'],
+		consume => ['CN'],
+		offer => ['PCMA', 'PCMU', 'telephone-event'],
+	} }, <<SDP);
+v=0
+o=testlab 949032 0 IN IP4 127.0.0.1
+s=session
+c=IN IP4 52.115.185.219
+b=CT:10000000
+t=0 0
+m=audio 52152 RTP/AVP 104 9 103 111 18 0 8 97 101 13 118
+c=IN IP4 52.115.185.219
+a=rtcp:52153
+a=mid:1
+a=sendrecv
+a=rtpmap:104 SILK/16000
+a=rtpmap:9 G722/8000
+a=rtpmap:103 SILK/8000
+a=rtpmap:111 SIREN/16000
+a=fmtp:111 bitrate=16000
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=no
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:97 RED/8000
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-16
+a=rtpmap:13 CN/8000
+a=rtpmap:118 CN/16000
+a=ptime:20
+----------------------------------
+v=0
+o=testlab 949032 0 IN IP4 127.0.0.1
+s=session
+c=IN IP4 52.115.185.219
+b=CT:10000000
+t=0 0
+m=audio PORT RTP/AVP 8 0 101
+c=IN IP4 203.0.113.1
+a=mid:1
+a=rtpmap:8 PCMA/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-16
+a=sendrecv
+a=rtcp:PORT
+a=ptime:20
+SDP
+
+answer('strip-all w consume and offer',
+	{ }, <<SDP);
+v=0
+o=testlab 3815920663 3815920664 IN IP4 89.250.11.190
+s=pjmedia
+c=IN IP4 89.250.11.190
+t=0 0
+m=audio 4002 RTP/AVP 8 101
+c=IN IP4 89.250.11.190
+a=rtcp:4003 IN IP4 172.31.250.201
+a=sendrecv
+a=rtpmap:8 PCMA/8000
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-16
+----------------------------------
+v=0
+o=testlab 3815920663 3815920664 IN IP4 89.250.11.190
+s=pjmedia
+c=IN IP4 89.250.11.190
+t=0 0
+m=audio PORT RTP/AVP 8 0 101 13
+c=IN IP4 203.0.113.1
+a=mid:1
+a=rtpmap:8 PCMA/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:101 telephone-event/8000
+a=rtpmap:13 CN/8000
+a=fmtp:101 0-16
+a=sendrecv
+a=rtcp:PORT
+a=ptime:20
+SDP
+
+offer('strip-all w consume and offer and s/c',
+	{ codec => {
+		strip => ['all'],
+		consume => ['CN'],
+		offer => ['PCMA', 'PCMU', 'telephone-event'],
+	},
+	flags => ['symmetric codecs'],
+	}, <<SDP);
+v=0
+o=testlab 949032 0 IN IP4 127.0.0.1
+s=session
+c=IN IP4 52.115.185.219
+b=CT:10000000
+t=0 0
+m=audio 52152 RTP/AVP 104 9 103 111 18 0 8 97 101 13 118
+c=IN IP4 52.115.185.219
+a=rtcp:52153
+a=mid:1
+a=sendrecv
+a=rtpmap:104 SILK/16000
+a=rtpmap:9 G722/8000
+a=rtpmap:103 SILK/8000
+a=rtpmap:111 SIREN/16000
+a=fmtp:111 bitrate=16000
+a=rtpmap:18 G729/8000
+a=fmtp:18 annexb=no
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:97 RED/8000
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-16
+a=rtpmap:13 CN/8000
+a=rtpmap:118 CN/16000
+a=ptime:20
+----------------------------------
+v=0
+o=testlab 949032 0 IN IP4 127.0.0.1
+s=session
+c=IN IP4 52.115.185.219
+b=CT:10000000
+t=0 0
+m=audio PORT RTP/AVP 8 0 101
+c=IN IP4 203.0.113.1
+a=mid:1
+a=rtpmap:8 PCMA/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-16
+a=sendrecv
+a=rtcp:PORT
+a=ptime:20
+SDP
+
+answer('strip-all w consume and offer and s/c',
+	{
+	flags => ['symmetric codecs'],
+	}, <<SDP);
+v=0
+o=testlab 3815920663 3815920664 IN IP4 89.250.11.190
+s=pjmedia
+c=IN IP4 89.250.11.190
+t=0 0
+m=audio 4002 RTP/AVP 8 101
+c=IN IP4 89.250.11.190
+a=rtcp:4003 IN IP4 172.31.250.201
+a=sendrecv
+a=rtpmap:8 PCMA/8000
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-16
+----------------------------------
+v=0
+o=testlab 3815920663 3815920664 IN IP4 89.250.11.190
+s=pjmedia
+c=IN IP4 89.250.11.190
+t=0 0
+m=audio PORT RTP/AVP 8 0 101 13
+c=IN IP4 203.0.113.1
+a=mid:1
+a=rtpmap:8 PCMA/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:101 telephone-event/8000
+a=rtpmap:13 CN/8000
+a=fmtp:101 0-16
+a=sendrecv
+a=rtcp:PORT
+a=ptime:20
+SDP
+
+
+
 
 
 
